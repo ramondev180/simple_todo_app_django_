@@ -1,0 +1,32 @@
+{% extends 'layouts/auth.html' %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <h3 class="mb-3">Login</h3>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" name="username" class="form-control" id="exampleInputEmail1"
+            value="{{ form.username.value|default:'' }}">
+        {% for error in form.username.errors %}
+        <p class="text-danger">{{ error }}</p>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="">
+        {% for error in form.password.errors %}
+        <p class="text-danger">{{ error }}</p>
+        {% endfor %}
+    </div>
+    <p>Don't have an account <a href="{% url 'userauth:register' %}">Register</a></p>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
